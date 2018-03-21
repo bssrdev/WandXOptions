@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
+import {Web3Service} from '../../services/services';
+
 
 @Component({
     selector: 'app-charts',
@@ -8,8 +10,16 @@ import { routerTransition } from '../../router.animations';
     animations: [routerTransition()]
 })
 export class ChartsComponent implements OnInit {
+    
+    constructor(private web3Service: Web3Service) {
+      this.onReady();
+    }
+    //constructor(){}
 
-    constructor() {}
+    onReady = () => {
 
+      // Get the initial account balance so it can be displayed.
+     this.web3Service.getAccounts()
+    }
     ngOnInit() {}
 }

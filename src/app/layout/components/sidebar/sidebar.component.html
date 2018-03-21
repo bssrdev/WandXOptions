@@ -1,5 +1,7 @@
-<nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}" style="background-image: -webkit-gradient(linear,left top,left bottom,from(#382673),to(#682382));">
+<nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}" style="background-image: -webkit-gradient(linear,left top,left bottom,from(#382673),to(#682382));top: 0px;">
     <div class="list-group">
+        <img src="assets/images/wandx_logo.png" style="width: 100px;height: 100px;margin: 0 auto;margin-top: 15px;
+    margin-bottom: 15px;">
         <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']" class="list-group-item" style="background: transparent;">
             <i class="fa fa-fw fa-hourglass-start"></i>&nbsp;{{ 'Start Channel' | translate }}
         </a>
@@ -93,10 +95,10 @@
                     </ul>
                 </li>
             </div> -->
-            <div class="nested-menu">
-                <a class="list-group-item" (click)="addExpandClass('profile')">
+            <div class="nested-menu">0xF84949DFfDBc8BB91f44Db238c0857b11719D8f9
+                <!-- <a class="list-group-item" (click)="addExpandClass('profile')">
                     <span><i class="fa fa-user"></i>&nbsp; 0xF84949DFfDBc8BB91f44Db238c0857b11719D8f9</span>
-                </a>
+                </a> -->
                 <!-- <li class="nested" [class.expand]="showMenu === 'profile'">
                     <ul class="submenu">
                         <li>
