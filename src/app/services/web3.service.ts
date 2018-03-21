@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
+import { reject } from 'q';
 
-import * as Web3 from 'web3';
+var Web3 = require('web3');
 
 declare var window: any;
 
 @Injectable()
 export class Web3Service {
 
-	public web3: any;
+  public web3: any;
+  public account: any;
 
   constructor() { 
   	this.checkAndInstantiateWeb3();
@@ -29,15 +31,18 @@ export class Web3Service {
   };
 
   getAccounts = () =>{
+    return new Promise((resolve, reject)=> {    
       this.web3.eth.getAccounts((err, accs) => {
             if (err != null) {
-                alert('There was an error fetching your accounts.');
+              resolve('There was an error fetching your accounts.');
             }
             else if (accs.length === 0) {
-                alert('Couldn\'t get any accounts! Make sure your Ethereum client is configured correctly.');
+              resolve('Couldn\'t get any accounts! Make sure your Ethereum client is configured correctly.');
             }
             else
-                alert(accs);
-            });
-            } 
+                //alert(accs);
+                resolve(accs);
+      });
+    });
+  }
 }
