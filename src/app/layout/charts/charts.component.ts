@@ -19,7 +19,7 @@ export class ChartsComponent implements OnInit {
     onReady = () => {
 
       // Get the initial account balance so it can be displayed.
-      this.web3Service.getAccounts()
+     this.web3Service.getAccounts()
     }
     ngOnInit() {}
 }
