@@ -1,0 +1,362 @@
+[
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getAllChannelsAsReceiver",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "channel",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_channelAddress",
+				"type": "address"
+			}
+		],
+		"name": "channelAfterChallengeSettlement",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_channelAddress",
+				"type": "address"
+			},
+			{
+				"name": "_balance",
+				"type": "uint256"
+			}
+		],
+		"name": "channelChallengedSettlement",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_channelAddress",
+				"type": "address"
+			},
+			{
+				"name": "_deposit",
+				"type": "uint256"
+			}
+		],
+		"name": "rechargeChannel",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_receiver",
+				"type": "address"
+			},
+			{
+				"name": "_tokenAddress",
+				"type": "address"
+			},
+			{
+				"name": "_challengePeriod",
+				"type": "uint256"
+			}
+		],
+		"name": "createChannel",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getAllChannelsAsSender",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_channelAddress",
+				"type": "address"
+			},
+			{
+				"name": "_balance",
+				"type": "uint256"
+			},
+			{
+				"name": "_balanceMsg",
+				"type": "bytes"
+			},
+			{
+				"name": "_closingMsg",
+				"type": "bytes"
+			}
+		],
+		"name": "channelMutualSettlement",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_channelAddress",
+				"type": "address"
+			},
+			{
+				"name": "_balance",
+				"type": "uint256"
+			},
+			{
+				"name": "_balanceMsg",
+				"type": "bytes"
+			}
+		],
+		"name": "withdrawFromChannel",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_channelAddress",
+				"type": "address"
+			}
+		],
+		"name": "getChallengeDetails",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "token",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_channelAddress",
+				"type": "address"
+			}
+		],
+		"name": "getInfo",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			},
+			{
+				"name": "",
+				"type": "address"
+			},
+			{
+				"name": "",
+				"type": "address"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint8"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "_senderAddress",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "_receiverAddress",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "_channelAddress",
+				"type": "address"
+			}
+		],
+		"name": "ChannelCreated",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "_senderAddress",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "_deposit",
+				"type": "uint256"
+			}
+		],
+		"name": "ChannelRecharged",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "_receiverAddress",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "_withdrawnBalance",
+				"type": "uint256"
+			}
+		],
+		"name": "ChannelWithdraw",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "_settleAddress",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "_balance",
+				"type": "uint256"
+			}
+		],
+		"name": "ChannelSettled",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "_senderAddress",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "_balance",
+				"type": "uint256"
+			}
+		],
+		"name": "ChannelChallenged",
+		"type": "event"
+	}
+]

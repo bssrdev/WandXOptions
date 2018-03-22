@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
+import {CreateChannelService} from '../../services/services';
 
 @Component({
     selector: 'app-dashboard',
@@ -9,11 +10,17 @@ import { routerTransition } from '../../router.animations';
 })
 export class DashboardComponent implements OnInit {
 
-    constructor() {
-        
+    constructor(private createService: CreateChannelService) {
+        this.onReady(); 
     }
 
-    ngOnInit() {}
+    onReady = () => {
+        this.createService.getOwner();        
+        //this.createService.createChannel();  
+        this.createService.getChannelsBySender(); 
+        this.createService.getChannelsByReceiver();
+        this.createService.getChannelInfo();     
+    }
 
-    
+    ngOnInit() {}    
 }

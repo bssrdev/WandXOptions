@@ -11,10 +11,12 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 
 import * as Web3 from 'web3';
-import {Web3Service} from './services/services';
+import {Web3Service, CreateChannelService} from './services/services';
 
 const SERVICES = [
-    Web3Service
+    AuthGuard,
+    Web3Service,
+    CreateChannelService
 ]
 
 // AoT requires an exported function for factories
@@ -40,7 +42,7 @@ export function createTranslateLoader(http: HttpClient) {
         AppRoutingModule
     ],
     declarations: [AppComponent],
-    providers: [AuthGuard, Web3Service],
+    providers: SERVICES,
     bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -14,12 +14,13 @@ export class ChartsComponent implements OnInit {
     constructor(private web3Service: Web3Service) {
       this.onReady();
     }
-    //constructor(){}
 
     onReady = () => {
-     // Get the initial account balance so it can be displayed.
+        alert("I am ready");
      this.web3Service.getAccounts().then(account => {
       alert(account);
+     }).catch((error)=>{
+        alert(error);
      });
      
     }

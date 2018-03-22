@@ -1,0 +1,7 @@
+{
+    "testToken" : {
+                    "name" : "Test Token",
+                    "contractAddress" : "0xed957fc427e2ddbf1fcc54cdc68b8a1edacada55",
+                    "symbol" : "TST"
+                }
+}
