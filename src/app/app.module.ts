@@ -11,12 +11,13 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 
 import * as Web3 from 'web3';
-import {Web3Service, CreateChannelService} from './services/services';
+import {Web3Service, CreateChannelService, ApproveTokenService} from './services/services';
 
 const SERVICES = [
     AuthGuard,
     Web3Service,
-    CreateChannelService
+    CreateChannelService,
+    ApproveTokenService
 ]
 
 // AoT requires an exported function for factories

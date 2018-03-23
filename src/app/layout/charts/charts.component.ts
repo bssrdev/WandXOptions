@@ -16,9 +16,8 @@ export class ChartsComponent implements OnInit {
     }
 
     onReady = () => {
-        alert("I am ready");
      this.web3Service.getAccounts().then(account => {
-      alert(account);
+      console.log(account);
      }).catch((error)=>{
         alert(error);
      });
