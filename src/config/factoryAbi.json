@@ -1,5 +1,47 @@
 [
 	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_channelAddress",
+				"type": "address"
+			},
+			{
+				"name": "_balance",
+				"type": "uint256"
+			},
+			{
+				"name": "_vbal",
+				"type": "uint8"
+			},
+			{
+				"name": "_rbal",
+				"type": "bytes32"
+			},
+			{
+				"name": "_sbal",
+				"type": "bytes32"
+			},
+			{
+				"name": "_vclose",
+				"type": "uint8"
+			},
+			{
+				"name": "_rclose",
+				"type": "bytes32"
+			},
+			{
+				"name": "_sclose",
+				"type": "bytes32"
+			}
+		],
+		"name": "channelMutualSettlement",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"constant": true,
 		"inputs": [],
 		"name": "getAllChannelsAsReceiver",
@@ -81,6 +123,36 @@
 				"type": "address"
 			},
 			{
+				"name": "_balance",
+				"type": "uint256"
+			},
+			{
+				"name": "_v",
+				"type": "uint8"
+			},
+			{
+				"name": "_r",
+				"type": "bytes32"
+			},
+			{
+				"name": "_s",
+				"type": "bytes32"
+			}
+		],
+		"name": "withdrawFromChannel",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_channelAddress",
+				"type": "address"
+			},
+			{
 				"name": "_deposit",
 				"type": "uint256"
 			}
@@ -89,6 +161,29 @@
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "channelAddress",
+				"type": "address"
+			}
+		],
+		"name": "getChannelUsers",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			},
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -125,54 +220,6 @@
 		],
 		"payable": false,
 		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_channelAddress",
-				"type": "address"
-			},
-			{
-				"name": "_balance",
-				"type": "uint256"
-			},
-			{
-				"name": "_balanceMsg",
-				"type": "bytes"
-			},
-			{
-				"name": "_closingMsg",
-				"type": "bytes"
-			}
-		],
-		"name": "channelMutualSettlement",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_channelAddress",
-				"type": "address"
-			},
-			{
-				"name": "_balance",
-				"type": "uint256"
-			},
-			{
-				"name": "_balanceMsg",
-				"type": "bytes"
-			}
-		],
-		"name": "withdrawFromChannel",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{

@@ -9,8 +9,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
-
-import * as Web3 from 'web3';
 import {Web3Service, CreateChannelService, ApproveTokenService} from './services/services';
 
 const SERVICES = [

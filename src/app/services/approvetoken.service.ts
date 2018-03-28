@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Web3Service } from './web3.service';
 const tokenAbi = require('../../config/testTokenAbi.json');
 const config = require('../../config/tokenlist.json');
-
+const BigNumber = require('bignumber.js');
 const Web3 = require('web3');
 
 declare var window: any;
@@ -13,8 +13,10 @@ export class ApproveTokenService {
   public web3: any;
   public account: any;
   public token: any;
+  public channelAddress: any;
 
   constructor(private web3Service: Web3Service) {
+    this.channelAddress = "0x361aDF8A58828ab76ad1E2b06bF7116529D99F78";
     if (typeof window.web3 !== 'undefined') {
         // Use Mist/MetaMask's provider
        this.web3 = new Web3(Web3.givenProvider);
@@ -37,7 +39,8 @@ export class ApproveTokenService {
 
   approveToken = () =>{
     this.web3Service.getAccounts().then((account)=>{
-    this.token.methods.approve("0x3C18541fFf78e8dac421379971Ac84BC37161435", 100).send({from: account})
+      let amount = new BigNumber(100).times(new BigNumber(10).pow(18));
+    this.token.methods.approve(this.channelAddress, amount).send({from: account})
     .on('transactionHash', function(hash){
       console.log(hash);
     })
