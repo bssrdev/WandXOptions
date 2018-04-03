@@ -15,14 +15,20 @@ export class DashboardComponent implements OnInit {
     }
 
     onReady = () => {
-        this.createService.getOwner();        
-        //this.createService.createChannel();  
+        this.createService.getOwner();         
         this.createService.getChannelsBySender(); 
-        //this.createService.getChannelsByReceiver();
+        this.createService.getChannelsByReceiver();
         this.createService.getChannelInfo();
+        //this.createService.getChallengeInfo();
+        //this.createService.createChannel();
         //this.createService.rechargeChannel(); 
-        this.createService.withdrawFromChannel(); 
+        //this.createService.withdrawFromChannel(); 
+        //this.createService.mutualSettleChannel(); 
+        //this.createService.challengeSettle(); 
+        //this.createService.afterChallengeSettle(); 
+                
         //this.createService.signBalanceHash();    
+        //this.createService.signClosingHash();    
     }
 
     ngOnInit() {}    
