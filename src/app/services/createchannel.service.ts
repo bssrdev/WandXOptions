@@ -25,7 +25,9 @@ export class CreateChannelService {
   public closingSig: any;
 
   constructor(private web3Service: Web3Service) {
-    this.channelAddress = "0x2e50f8FAC4a0D2BEe55AAe6dc23B0630Fa9E5b6e";
+
+    // Parameters will be changed as per the execution
+    this.channelAddress = "0x47fd281Ad46512E65510674e317424c3cb5f7017";
     this.receiver       = "0x7f75e578b4c55a9f5c01eb7380149ed5e33987c8";
     this.tokenAddress   = "0xed957fc427e2ddbf1fcc54cdc68b8a1edacada55";
     this.sender         = "0x3f7d6f0825c4838529470dd2ad2ff5868571d706";
@@ -114,6 +116,7 @@ export class CreateChannelService {
   }
 
   withdrawFromChannel = () =>{
+    // Signature will be changed as per the execution
     this.sig = "0xc3e4ebb25f45031eec6429a59b3ec77664299af65401672dbfe170e9b787d11c18488bc055f8d6aed834d25e23291f794d9abbe13ce10ba5b93f6ae49481ba881c";
     this.web3Service.getAccounts().then((account)=>{
       this.sig = this.sig.substr(2, this.sig.length);
@@ -138,8 +141,9 @@ export class CreateChannelService {
 
 
   mutualSettleChannel = () =>{
-    this.balanceSig = "0x7a0bb416f9b674695504490c72a4969775a33e9d2c1b5c4668701fd495263ab6174f2f6f302cd3dde4db0adb011dd4fd7f0a70fba4b7a50465cd7762df9c0fe21c";
-    this.closingSig = "0x96793048237d2f28bc67afc8a60be3c2d812692611e1d0db0d2dc330a590034f1c03611aaf0c50300a0945e6d2a1ffaf5333be04e53efeeefa2b9f7e5a56234d1c";
+    // Signatures will be changed as per the execution
+    this.balanceSig = "0xb0654a0c8371d1eaced35398809fc3b143213745563b2eb0f536e9913a3024e818cfc71c3559167145ab7b9876915b74dbd105293d854a25655ec3cd834ec2e11b";
+    this.closingSig = "0x9c677b881a6f3dfc081447002da374effbb79dc9165dab948e52ee2e2ecf3d1c4e9712d47bd92ee84e052c06ca245307439fefe415b49becf5367eda661f6edf1b";
     this.web3Service.getAccounts().then((account)=>{
       this.balanceSig = this.balanceSig.substr(2, this.balanceSig.length);
         let rbal = '0x' + this.balanceSig.substr(0, 64);
@@ -160,7 +164,7 @@ export class CreateChannelService {
         console.log("vclose : ",vclose);
         
 
-      let balance = new BigNumber(40).times(new BigNumber(10).pow(18));            
+      let balance = new BigNumber(30).times(new BigNumber(10).pow(18));            
     this.factory.methods.channelMutualSettlement(this.channelAddress, balance, vbal, rbal, sbal, vclose, rclose, sclose).send({from: account})
     .on('transactionHash', function(hash){
       console.log(hash);
@@ -178,7 +182,7 @@ export class CreateChannelService {
 
   signBalanceHash = () =>{
     this.web3Service.getAccounts().then((account)=>{
-      let balance = new BigNumber(10).times(new BigNumber(10).pow(18));
+      let balance = new BigNumber(30).times(new BigNumber(10).pow(18));
         
       this.hash = this.web3.utils.soliditySha3(this.receiver,balance,this.channelAddress);
         this.web3.eth.sign(this.hash, account, function (err, sig) {
@@ -192,7 +196,7 @@ export class CreateChannelService {
 
   signClosingHash = () =>{
     this.web3Service.getAccounts().then((account)=>{
-      let balance = new BigNumber(40).times(new BigNumber(10).pow(18));
+      let balance = new BigNumber(30).times(new BigNumber(10).pow(18));
         
       this.hash = this.web3.utils.soliditySha3(this.sender, balance,this.channelAddress);
         this.web3.eth.sign(this.hash, account, function (err, closingSig) {

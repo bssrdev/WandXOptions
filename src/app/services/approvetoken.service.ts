@@ -16,7 +16,7 @@ export class ApproveTokenService {
   public channelAddress: any;
 
   constructor(private web3Service: Web3Service) {
-    this.channelAddress = "0x2e50f8FAC4a0D2BEe55AAe6dc23B0630Fa9E5b6e";
+    this.channelAddress = "0x47fd281Ad46512E65510674e317424c3cb5f7017"; // Change it accordingly
     if (typeof window.web3 !== 'undefined') {
         // Use Mist/MetaMask's provider
        this.web3 = new Web3(Web3.givenProvider);

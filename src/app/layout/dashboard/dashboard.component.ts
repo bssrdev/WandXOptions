@@ -18,12 +18,12 @@ export class DashboardComponent implements OnInit {
         this.createService.getOwner();         
         this.createService.getChannelsBySender(); 
         this.createService.getChannelsByReceiver();
-        this.createService.getChannelInfo();
+        //this.createService.getChannelInfo();
         //this.createService.getChallengeInfo();
         //this.createService.createChannel();
         //this.createService.rechargeChannel(); 
         //this.createService.withdrawFromChannel(); 
-        //this.createService.mutualSettleChannel(); 
+        this.createService.mutualSettleChannel(); 
         //this.createService.challengeSettle(); 
         //this.createService.afterChallengeSettle(); 
                 
