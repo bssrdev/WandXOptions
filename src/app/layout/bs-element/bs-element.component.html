@@ -25,12 +25,11 @@
                 <div style="text-align: center;margin: 0 auto;margin-top: 10px ">
                     <div *ngIf='detailData["5"]==0'>
                         <button class="btn btn-primary" [routerLink]="['/forms']">Approve Token</button>
-                        <button class="btn btn-primary">Recharge Channel</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Recharge Channel</button>
                     </div>
                     <div *ngIf='detailData["5"]==1'>
-                        <button class="btn btn-primary">Recharge Channel</button>
-                        <button class="btn btn-primary">Sign BalanceHash</button>
-                        <button class="btn btn-primary">Challenge Settlement</button>
+                        <button class="btn btn-primary">Withdraw token</button>
+                        <button class="btn btn-primary">Sign closingMessage</button>
                     </div>
                     <div *ngIf='detailData["5"]==2'>
                         <button class="btn btn-primary">Sign BalanceHash</button>
@@ -49,3 +48,32 @@
         </div>
     </div>
 </div>
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Recharge Channel</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+               <div class="form-group">
+                   <label for="token">Amount of tokens</label>
+                   <input class="form-control" placeholder="Amount of tokens" [(ngModel)]="token">
+               </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="submit(token,detailData.address)">Submit</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+

@@ -86,7 +86,7 @@ export class CreateChannelService {
 
     getChannelInfo = (channelAddress,callback) => {
         this.factory.methods.getInfo(channelAddress).call().then((res) => {
-           console.log("channel");
+           //console.log("channel");
             //res.channelAddress = channelAddress;
             //this._ChannelInfo.next(res);
             callback(res);
@@ -119,10 +119,10 @@ export class CreateChannelService {
         });
     };
 
-    rechargeChannel = () => {
+    rechargeChannel = (channelAddress, deposits) => {
         this.web3Service.getAccounts().then((account) => {
-            let deposit = new BigNumber(50).times(new BigNumber(10).pow(18));
-            this.factory.methods.rechargeChannel(this.channelAddress, deposit).send({from: account})
+            let deposit = new BigNumber(deposits).times(new BigNumber(10).pow(18));
+            this.factory.methods.rechargeChannel(channelAddress, deposit).send({from: account})
                 .on('transactionHash', function (hash) {
                     console.log(hash);
                 })

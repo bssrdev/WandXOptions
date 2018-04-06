@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {routerTransition} from '../../router.animations';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ShareddataService} from '../../services/shareddata.service';
+import {CreateChannelService} from '../../services/services';
 
 @Component({
     selector: 'app-bs-element',
@@ -13,7 +14,7 @@ export class BsElementComponent implements OnInit {
     public detailData: any;
     public parameter: any;
 
-    constructor(private shareddataService: ShareddataService, private route: ActivatedRoute, private router: Router) {
+    constructor(private createService: CreateChannelService,private shareddataService: ShareddataService, private route: ActivatedRoute, private router: Router) {
         this.route.params.subscribe(params => {
             this.parameter = params.id;
             console.log(params);
@@ -32,5 +33,8 @@ export class BsElementComponent implements OnInit {
 
 
         });
+    }
+    submit(token,address){
+    this.createService.rechargeChannel(address,token);
     }
 }

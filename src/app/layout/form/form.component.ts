@@ -16,13 +16,13 @@ export class FormComponent implements OnInit {
     ngOnInit() {
         let _this = this;
         this.createService.getTokenlist(function (result) {
-            console.log('result', result);
+           // console.log('result', result);
             _this.tokenList = result.testToken;
         });
         this.senderChannel = [];
         console.log(this.senderChannel);
         this.createService.getChannelsBySender(function (result) {
-            console.log('channel address',result);
+            //console.log('channel address',result);
             result.map((key) => {
                 _this.getChannelInfo(key);
             });
@@ -30,10 +30,11 @@ export class FormComponent implements OnInit {
     }
     getChannelInfo(address) {
         let _this=this;
+        this.approveTokenService.getallowance(address);
         this.createService.getChannelInfo(address, function (result) {
             result.address=address;
             _this.senderChannel.push(result);
-            console.log('finalArray', _this.senderChannel);
+            //console.log('finalArray', _this.senderChannel);
         });
     }
     approveToken(contractAddress,amount){
