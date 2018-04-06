@@ -12,9 +12,9 @@
                     <span *ngIf='temp["5"]==4'>Settled</span>
                 </div>
                 <div class="card-body">
-                    <div><b>Channel Address:</b>{{temp.address}}</div>
-                    <div><b>Token Address : </b>{{temp["2"]}}</div>
-                    <div><b>Created At : </b>{{temp['4'] * 1000 | date:'medium'}}</div>
+                    <div style="font-size: 15px;"><b>Channel Address:</b>{{temp.address}}</div>
+                    <div style="font-size: 15px;"><b>Token Address : </b>{{temp["2"]}}</div>
+                    <div style="font-size: 15px;"><b>Created At : </b>{{temp['4'] * 1000 | date:'medium'}}</div>
                 </div>
                 <div class="card-footer">
                     <button class="btn btn-info btn-sm" [routerLink]="['/channelDetail/'+i]">Click here for more details</button>
@@ -26,20 +26,3 @@
 
 <!-- Button trigger modal -->
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>

@@ -71,12 +71,17 @@ export class CreateChannelService {
     };
 
     getChannelsByReceiver = () => {
-        this.web3Service.getAccounts().then((account) => {
-            this.factory.methods.getAllChannelsAsReceiver().call({from: account}).then((res) => {
-                console.log(res);
+        return new Promise((resolve, reject)=> {
+            this.web3Service.getAccounts().then((account) => {
+                this.factory.methods.getAllChannelsAsReceiver().call({from: account}).then((res) => {
+                    if(res){
+                        resolve(res);
+                    }else{
+                        reject("error while fetching data");
+                    }
+                });
             });
-        });
-
+        })
     };
 
     getChannelInfo = (channelAddress,callback) => {

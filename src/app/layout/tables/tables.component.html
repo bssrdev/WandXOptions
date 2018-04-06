@@ -1,53 +1,25 @@
 <div [@routerTransition]>
-    <app-page-header [heading]="'Active Options'" [icon]="'fa-table'"></app-page-header>
-    <div class="form-group">
-        <label>Choose Your Options</label>
-        <select class="form-control">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-        </select>
-    </div>
+    <app-page-header [heading]="'Channel as Receiver'" [icon]="'fa-table'"></app-page-header>
     <div class="row">
-        
-        <div class="col col-xl-12 col-lg-12">
-            
+        <div class="col col-sm-6" *ngFor="let temp of receiverChannel;let i = index" >
             <div class="card mb-3">
-                <div class="card-header">Active Options (Here is the list of all your active options.)</div>
-                <table class="card-body table table-hover">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Header 1</th>
-                        <th>Header 2</th>
-                        <th>Header 3</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>RH1</td>
-                        <td>RH2</td>
-                        <td>RH3</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>RH2</td>
-                        <td>RH3</td>
-                        <td>RH4</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>RH2</td>
-                        <td>RH3</td>
-                        <td>RH4</td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div class="card-header" >
+                    <b>Status : </b>
+                    <span *ngIf='temp["5"]==0'>Initiated</span>
+                    <span *ngIf='temp["5"]==1'>Recharged</span>
+                    <span *ngIf='temp["5"]==2'>Withdrawn</span>
+                    <span *ngIf='temp["5"]==3'>InChallenge</span>
+                    <span *ngIf='temp["5"]==4'>Settled</span>
+                </div>
+                <div class="card-body">
+                    <div style="font-size: 15px;"><b>Channel Address:</b>{{temp.address}}</div>
+                    <div style="font-size: 15px;"><b>Token Address : </b>{{temp["2"]}}</div>
+                    <div style="font-size: 15px;"><b>Created At : </b>{{temp['4'] * 1000 | date:'medium'}}</div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-info btn-sm" [routerLink]="['/channelDetail/'+i]">Click here for more details</button>
+                </div>
             </div>
-            
         </div>
     </div>
 </div>
