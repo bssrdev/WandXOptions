@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { routerTransition } from '../../router.animations';
+import {Component, OnInit} from '@angular/core';
+import {routerTransition} from '../../router.animations';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ShareddataService} from '../../services/shareddata.service';
 
 @Component({
     selector: 'app-bs-element',
@@ -8,7 +10,27 @@ import { routerTransition } from '../../router.animations';
     animations: [routerTransition()]
 })
 export class BsElementComponent implements OnInit {
-    constructor() {}
+    public detailData: any;
+    public parameter: any;
 
-    ngOnInit() {}
+    constructor(private shareddataService: ShareddataService, private route: ActivatedRoute, private router: Router) {
+        this.route.params.subscribe(params => {
+            this.parameter = params.id;
+            console.log(params);
+        });
+    }
+
+    ngOnInit() {
+        const _thiss = this;
+        this.shareddataService.getData(function (result) {
+            if (result) {
+                _thiss.detailData = result[_thiss.parameter];
+                console.log('details', _thiss.detailData);
+            } else {
+                _thiss.router.navigateByUrl('/charts');
+            }
+
+
+        });
+    }
 }

@@ -1,17 +1,27 @@
 <div [@routerTransition]>
     <app-page-header [heading]="'Approve Token'" [icon]="'fa-edit'"></app-page-header>
-
     <div class="row">
         <div class="col-lg-6">
-
-            
-
-        </div>
-        <div class="col-lg-6">
-            
-            
-
+            <div class="form-group">
+                <label>Token</label>
+                <select name="token" class="form-control" [(ngModel)]="tokenaddress">
+                    <option value="{{tokenList.contractAddress}}">{{tokenList.symbol}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Channel Contract Address</label>
+                <select class="form-control"  name="contractAddress" [(ngModel)]="contractAddress" >
+                    <option *ngFor="let temp of senderChannel"
+                            [value]="temp.address">
+                        {{temp.address}}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Amount of tokens</label>
+                <input class="form-control" placeholder="Amount of tokens" type="number" name="p" [(ngModel)]="amount">
+            </div>
+            <button class="btn btn-primary" (click)="approveToken(contractAddress,amount)">Approve Token</button>
         </div>
     </div>
-    <!-- /.row -->
 </div>

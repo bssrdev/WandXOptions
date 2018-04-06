@@ -27,7 +27,7 @@ export class ApproveTokenService {
   }
 
   createInstance = () =>{
-    this.token = new this.web3.eth.Contract(tokenAbi, config.testToken.contractAddress);  
+    this.token = new this.web3.eth.Contract(tokenAbi, config.testToken.contractAddress);
   }
 
   getSupply = () =>{
@@ -35,12 +35,12 @@ export class ApproveTokenService {
         console.log(result);
     });
   }
-  
 
-  approveToken = () =>{
-    this.web3Service.getAccounts().then((account)=>{
-      let amount = new BigNumber(100).times(new BigNumber(10).pow(18));
-    this.token.methods.approve(this.channelAddress, amount).send({from: account})
+
+  approveToken = (channelAddress, amt) =>{
+      console.log(typeof amt);
+    this.web3Service.getAccounts().then((account) => {
+    this.token.methods.approve(channelAddress, amt).send({from: account})
     .on('transactionHash', function(hash){
       console.log(hash);
     })

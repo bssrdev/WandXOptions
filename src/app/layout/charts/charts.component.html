@@ -1,98 +1,44 @@
 <div [@routerTransition]>
     <app-page-header [heading]="'Channels As Sender'" [icon]="'fa-bar-chart-o'"></app-page-header>
     <div class="row">
-        <div class="col col-sm-6">
+        <div class="col col-sm-6" *ngFor="let temp of senderChannel;let i = index" >
             <div class="card mb-3">
-                <div class="card-header">
-                    <b>Status : </b>Initiated
+                <div class="card-header" >
+                    <b>Status : </b>
+                    <span *ngIf='temp["5"]==0'>Initiated</span>
+                    <span *ngIf='temp["5"]==1'>Recharged</span>
+                    <span *ngIf='temp["5"]==2'>Withdrawn</span>
+                    <span *ngIf='temp["5"]==3'>InChallenge</span>
+                    <span *ngIf='temp["5"]==4'>Settled</span>
                 </div>
                 <div class="card-body">
-                    <div><b>Channel Address : </b>0xF84949DFfDBc8BB91f44Db238c0857b11719D8f9</div>
-                    <div><b>Token Address : </b>0x7F75E578b4c55a9f5c01eb7380149Ed5e33987C8</div>
-                    <div><b>Created At : </b>Tue, 06 Mar 2018 20:14:12</div>
+                    <div><b>Channel Address:</b>{{temp.address}}</div>
+                    <div><b>Token Address : </b>{{temp["2"]}}</div>
+                    <div><b>Created At : </b>{{temp['4'] * 1000 | date:'medium'}}</div>
                 </div>
                 <div class="card-footer">
-                    <button class="btn btn-info btn-sm" (click)="randomize()">Click here for more details</button>
-                </div>
-            </div>
-        </div>
-        <div class="col col-sm-6">
-            <div class="card mb-3">
-                <div class="card-header">
-                    <b>Status : </b>Settled
-                </div>
-                <div class="card-body">
-                    <div><b>Channel Address : </b>0xF84949DFfDBc8BB91f44Db238c0857b11719D8f9</div>
-                    <div><b>Token Address : </b>0x7F75E578b4c55a9f5c01eb7380149Ed5e33987C8</div>
-                    <div><b>Created At : </b>Tue, 06 Mar 2018 20:14:12</div>
-                </div>
-                <div class="card-footer">
-                    <button class="btn btn-info btn-sm" (click)="randomize()">Click here for more details</button>
+                    <button class="btn btn-info btn-sm" [routerLink]="['/channelDetail/'+i]">Click here for more details</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col col-sm-6">
-            <div class="card mb-3">
-                <div class="card-header">
-                    <b>Status : </b>Initiated
-                </div>
-                <div class="card-body">
-                    <div><b>Channel Address : </b>0xF84949DFfDBc8BB91f44Db238c0857b11719D8f9</div>
-                    <div><b>Token Address : </b>0x7F75E578b4c55a9f5c01eb7380149Ed5e33987C8</div>
-                    <div><b>Created At : </b>Tue, 06 Mar 2018 20:14:12</div>
-                </div>
-                <div class="card-footer">
-                    <button class="btn btn-info btn-sm" (click)="randomize()">Click here for more details</button>
-                </div>
+</div>
+
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
             </div>
-        </div>
-        <div class="col col-sm-6">
-            <div class="card mb-3">
-                <div class="card-header">
-                    <b>Status : </b>Initiated
-                </div>
-                <div class="card-body">
-                    <div><b>Channel Address : </b>0xF84949DFfDBc8BB91f44Db238c0857b11719D8f9</div>
-                    <div><b>Token Address : </b>0x7F75E578b4c55a9f5c01eb7380149Ed5e33987C8</div>
-                    <div><b>Created At : </b>Tue, 06 Mar 2018 20:14:12</div>
-                </div>
-                <div class="card-footer">
-                    <button class="btn btn-info btn-sm" (click)="randomize()">Click here for more details</button>
-                </div>
+            <div class="modal-body">
+                ...
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col col-sm-6">
-            <div class="card mb-3">
-                <div class="card-header">
-                    <b>Status : </b>Settled
-                </div>
-                <div class="card-body">
-                    <div><b>Channel Address : </b>0xF84949DFfDBc8BB91f44Db238c0857b11719D8f9</div>
-                    <div><b>Token Address : </b>0x7F75E578b4c55a9f5c01eb7380149Ed5e33987C8</div>
-                    <div><b>Created At : </b>Tue, 06 Mar 2018 20:14:12</div>
-                </div>
-                <div class="card-footer">
-                    <button class="btn btn-info btn-sm" (click)="randomize()">Click here for more details</button>
-                </div>
-            </div>
-        </div>
-        <div class="col col-sm-6">
-            <div class="card mb-3">
-                <div class="card-header">
-                    <b>Status : </b>InChallenge
-                </div>
-                <div class="card-body">
-                    <div><b>Channel Address : </b>0xF84949DFfDBc8BB91f44Db238c0857b11719D8f9</div>
-                    <div><b>Token Address : </b>0x7F75E578b4c55a9f5c01eb7380149Ed5e33987C8</div>
-                    <div><b>Created At : </b>Tue, 06 Mar 2018 20:14:12</div>
-                </div>
-                <div class="card-footer">
-                    <button class="btn btn-info btn-sm" (click)="randomize()">Click here for more details</button>
-                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>

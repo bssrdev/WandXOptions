@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { routerTransition } from '../../router.animations';
-import {ApproveTokenService} from '../../services/services';
+import {Component, OnInit} from '@angular/core';
+import {routerTransition} from '../../router.animations';
+import {ApproveTokenService, CreateChannelService,ShareddataService} from '../../services/services';
 
 @Component({
     selector: 'app-form',
@@ -9,14 +9,35 @@ import {ApproveTokenService} from '../../services/services';
     animations: [routerTransition()]
 })
 export class FormComponent implements OnInit {
-    constructor(private tokenservice:ApproveTokenService) {
-        this.onReady();
+    public tokenList: any;
+    public senderChannel=[]
+    constructor(private createService: CreateChannelService,private approveTokenService:ApproveTokenService) {
     }
-
-    onReady = () =>{
-        this.tokenservice.getSupply();
-        //this.tokenservice.approveToken();
+    ngOnInit() {
+        let _this = this;
+        this.createService.getTokenlist(function (result) {
+            console.log('result', result);
+            _this.tokenList = result.testToken;
+        });
+        this.senderChannel = [];
+        console.log(this.senderChannel);
+        this.createService.getChannelsBySender(function (result) {
+            console.log('channel address',result);
+            result.map((key) => {
+                _this.getChannelInfo(key);
+            });
+        });
     }
-
-    ngOnInit() {}
+    getChannelInfo(address) {
+        let _this=this;
+        this.createService.getChannelInfo(address, function (result) {
+            result.address=address;
+            _this.senderChannel.push(result);
+            console.log('finalArray', _this.senderChannel);
+        });
+    }
+    approveToken(contractAddress,amount){
+        console.log(contractAddress,amount );
+        this.approveTokenService.approveToken(contractAddress, amount);
+    }
 }

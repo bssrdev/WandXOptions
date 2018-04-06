@@ -5,17 +5,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 import {Web3Service, CreateChannelService, ApproveTokenService} from './services/services';
+import {ShareddataService} from './services/shareddata.service';
 
 const SERVICES = [
     AuthGuard,
     Web3Service,
     CreateChannelService,
-    ApproveTokenService
+    ApproveTokenService,
+    ShareddataService
 ]
 
 // AoT requires an exported function for factories
