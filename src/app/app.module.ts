@@ -11,13 +11,15 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 import {Web3Service, CreateChannelService, ApproveTokenService} from './services/services';
 import {ShareddataService} from './services/shareddata.service';
+import {NotificationManagerService} from './services/notification-manager.service';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 const SERVICES = [
     AuthGuard,
     Web3Service,
     CreateChannelService,
     ApproveTokenService,
-    ShareddataService
+    ShareddataService,
+    NotificationManagerService
 ]
 
 // AoT requires an exported function for factories

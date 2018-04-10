@@ -40,8 +40,9 @@ export class ApproveTokenService {
 
     approveToken = (channelAddress, amt) => {
         console.log(typeof amt);
+        let balance = new BigNumber(amt).times(new BigNumber(10).pow(18));
         this.web3Service.getAccounts().then((account) => {
-            this.token.methods.approve(channelAddress, amt).send({from: account})
+            this.token.methods.approve(channelAddress, balance).send({from: account})
                 .on('transactionHash', function (hash) {
                     console.log(hash);
                 })

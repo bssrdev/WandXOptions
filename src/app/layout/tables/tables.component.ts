@@ -19,7 +19,10 @@ export class TablesComponent implements OnInit {
         this.createService.getChannelsByReceiver().then(function (result) {
             console.log('result', result);
             if(result){
-
+                //console.log(Object.values(result))
+                Object.values(result).map((key) => {
+                    _this.getChannelInfo(key);
+                });
             }
         });
     }

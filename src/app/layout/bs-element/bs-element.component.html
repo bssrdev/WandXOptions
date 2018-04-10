@@ -6,14 +6,14 @@
             <div class="row">
             <div class="col-md-6">
                 <p><b>Channel Address:</b> <span>{{detailData.address}}</span></p>
-                <p><b>Receiver Address:</b> <span>{{detailData["2"]}}</span></p>
-                <p><b>Deposited Balance:</b> <span>{{detailData["6"]}}</span></p>
+                <p><b>Receiver Address:</b> <span>{{detailData["1"]}}</span></p>
+                <p><b>Deposited Balance:</b> <span>{{getNumber(detailData["6"])}}</span></p>
                 <p><b>Created At:</b> <span>{{detailData['4'] * 1000 | date:'medium'}}</span></p>
             </div>
             <div class="col-md-6">
                 <p><b>Token Address: </b> <br/><span> {{detailData["2"]}}</span></p>
                 <p><b>Challenge Period:</b> <span>{{detailData["3"]}}(In seconds)</span></p>
-                <p><b>Withdrawn Balance:</b> <span>{{detailData["7"]}}</span></p>
+                <p><b>Withdrawn Balance:</b> <span>{{getNumber(detailData["7"])}}</span></p>
                 <p><b>Status : </b>
                     <span *ngIf='detailData["5"]==0'>Initiated</span>
                     <span *ngIf='detailData["5"]==1'>Recharged</span>
@@ -22,21 +22,46 @@
                     <span *ngIf='detailData["5"]==4'>Settled</span></p>
             </div>
                 <br/>
-                <div style="text-align: center;margin: 0 auto;margin-top: 10px ">
+                <div style="text-align: center;margin: 0 auto;margin-top: 10px " *ngIf="page==='sender'">
                     <div *ngIf='detailData["5"]==0'>
                         <button class="btn btn-primary" [routerLink]="['/forms']">Approve Token</button>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Recharge Channel</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal"  (click)="token=''">Recharge Channel</button>
                     </div>
                     <div *ngIf='detailData["5"]==1'>
-                        <button class="btn btn-primary">Withdraw token</button>
-                        <button class="btn btn-primary">Sign closingMessage</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" (click)="token=''">Recharge Channel</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal1" (click)="balance=''">Sign BalanceHash</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal2" (click)="balance=''">Settle Channel</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal5" (click)="Cbalance=''" >Challenge Settlement</button>
                     </div>
                     <div *ngIf='detailData["5"]==2'>
-                        <button class="btn btn-primary">Sign BalanceHash</button>
-                        <button class="btn btn-primary">Challenge Settlement</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal1">Sign BalanceHash</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal2" (click)="balance=''">Settle Channel</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal5" (click)="Cbalance=''">Challenge Settlement</button>
                     </div>
                     <div *ngIf='detailData["5"]==3'>
-                        <button class="btn btn-primary">Settle Channel</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal6" >Settle Channel</button>
+                    </div>
+                    <div *ngIf='detailData["5"]==4'>
+                        <button class="btn btn-primary">settled</button>
+                    </div>
+
+                </div>
+                <div style="text-align: center;margin: 0 auto;margin-top: 10px " *ngIf="page!='sender'">
+                    <div *ngIf='detailData["5"]==0'>
+                        <button class="btn btn-primary">Sender of this channel has not recharged it yet</button>
+                    </div>
+                    <div *ngIf='detailData["5"]==1'>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal3" (click)="token=''">Withdraw Tokens</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal4" (click)="balance=''">Sign ClosingHash</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal2" (click)="balance=''">Settle Channel</button>
+                    </div>
+                    <div *ngIf='detailData["5"]==2'>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal4" (click)="balance=''">Sign ClosingHash</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal2" (click)="balance=''">Settle Channel</button>
+                    </div>
+                    <div *ngIf='detailData["5"]==3'>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal4" (click)="balance=''">Sign ClosingHash</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal2" (click)="balance=''">Settle Channel</button>
                     </div>
                     <div *ngIf='detailData["5"]==4'>
                         <button class="btn btn-primary">settled</button>
@@ -49,14 +74,14 @@
     </div>
 </div>
 <!-- The Modal -->
-<div class="modal fade" id="myModal">
+<div class="modal fade" id="myModal" *ngIf="detailData" >
     <div class="modal-dialog">
         <div class="modal-content">
 
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Recharge Channel</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button type="button" class="close" data-dismiss="modal" #closeBtn>&times;</button>
             </div>
 
             <!-- Modal body -->
@@ -71,6 +96,187 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" (click)="submit(token,detailData.address)">Submit</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div >
+<div class="modal fade" id="myModal1" *ngIf="detailData">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Sign BalanceHash</h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+               <div class="form-group">
+                   <label for="ca">Channel Address</label>
+                   <input class="form-control" placeholder="Amount of tokens" value="{{detailData.address}}" readonly id="ca">
+               </div>
+                <div class="form-group">
+                   <label for="ra">Receiver Address</label>
+                   <input class="form-control" placeholder="Amount of tokens" value="{{detailData['1']}}"  readonly id="ra">
+               </div>
+                <div class="form-group">
+                   <label for="balance">Balance</label>
+                   <input class="form-control" placeholder="Amount of tokens" [(ngModel)]="balance" id="balance">
+               </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="signBalanceHash(detailData.address,detailData['1'],balance)">Submit</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal2" *ngIf="detailData">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Settle channel</h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+               <div class="form-group">
+                   <label for="cas">Balance Message</label>
+                   <input class="form-control" placeholder="Balance Message" [(ngModel)]="balanceMessage"   id="cas">
+               </div>
+                <div class="form-group">
+                   <label for="ras">Closing Message</label>
+                   <input class="form-control" placeholder="Closing Message" [(ngModel)]="closingMessage"    id="ras">
+               </div>
+                <div class="form-group">
+                   <label for="balances">Balance</label>
+                   <input class="form-control" placeholder="Amount of tokens" [(ngModel)]="balance" id="balances">
+               </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="settleChannel(balanceMessage,closingMessage,balance)">Submit</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal3" *ngIf="detailData">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Withdraw Token</h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+               <div class="form-group">
+                   <label for="cas">BalanceMessage Signed By sender</label>
+                   <input class="form-control" placeholder="Balance Message" [(ngModel)]="balanceMessage"   id="cas">
+               </div>
+                <div class="form-group">
+                   <label for="balances">Balance</label>
+                   <input class="form-control" placeholder="Balance" [(ngModel)]="balance" id="balances">
+               </div>
+                <p>Notice : You can withdraw only once before channel settlement</p>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="Withdraw(balanceMessage, balance)">Submit</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal4" *ngIf="detailData">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Sign ClosingHash</h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="ca">Channel Address</label>
+                    <input class="form-control" placeholder="Amount of tokens" value="{{detailData.address}}" readonly id="ca">
+                </div>
+                <div class="form-group">
+                    <label for="ra">Sender Address</label>
+                    <input class="form-control" placeholder="Amount of tokens" value="{{detailData['0']}}"  readonly id="ra">
+                </div>
+                <div class="form-group">
+                    <label for="balance">Balance</label>
+                    <input class="form-control" placeholder="Amount of tokens" [(ngModel)]="balance" id="balance">
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="closeBalanceHash(detailData.address,detailData['0'], balance)">Submit</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal5" *ngIf="detailData">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Challenge Settlement</h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="balance">Balance</label>
+                    <input class="form-control" placeholder="Amount of tokens" [(ngModel)]="Cbalance" id="balance">
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="challengeSettle(Cbalance)">Submit</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal6" *ngIf="detailData">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Settle Channel </h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p>Are you sure want to settle this channel</p>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="afterChallengeSettle()">YES</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">NO</button>
             </div>
 
         </div>
