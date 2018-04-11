@@ -11,7 +11,7 @@
                 <p><b>Created At:</b> <span>{{detailData['4'] * 1000 | date:'medium'}}</span></p>
             </div>
             <div class="col-md-6">
-                <p><b>Token Address: </b> <br/><span> {{detailData["2"]}}</span></p>
+                <p><b>Token Name: </b> <br/><span> {{detailData["2"]}}</span></p>
                 <p><b>Challenge Period:</b> <span>{{detailData["3"]}}(In seconds)</span></p>
                 <p><b>Withdrawn Balance:</b> <span>{{getNumber(detailData["7"])}}</span></p>
                 <p><b>Status : </b>
@@ -24,7 +24,7 @@
                 <br/>
                 <div style="text-align: center;margin: 0 auto;margin-top: 10px " *ngIf="page==='sender'">
                     <div *ngIf='detailData["5"]==0'>
-                        <button class="btn btn-primary" [routerLink]="['/forms']">Approve Token</button>
+                        <button class="btn btn-primary"  [routerLink]="['/forms']">Approve Token</button>
                         <button class="btn btn-primary" data-toggle="modal" data-target="#myModal"  (click)="token=''">Recharge Channel</button>
                     </div>
                     <div *ngIf='detailData["5"]==1'>
@@ -44,7 +44,6 @@
                     <div *ngIf='detailData["5"]==4'>
                         <button class="btn btn-primary">settled</button>
                     </div>
-
                 </div>
                 <div style="text-align: center;margin: 0 auto;margin-top: 10px " *ngIf="page!='sender'">
                     <div *ngIf='detailData["5"]==0'>
@@ -108,6 +107,7 @@
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Sign BalanceHash</h4>
+                <button type="button" class="close" data-dismiss="modal" #balanceHash>&times;</button>
             </div>
 
             <!-- Modal body -->
@@ -142,6 +142,7 @@
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Settle channel</h4>
+                <button type="button" class="close" data-dismiss="modal" #Settle>&times;</button>
             </div>
 
             <!-- Modal body -->
@@ -176,6 +177,7 @@
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Withdraw Token</h4>
+                <button type="button" class="close" data-dismiss="modal" #withdraw>&times;</button>
             </div>
 
             <!-- Modal body -->
@@ -206,6 +208,7 @@
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Sign ClosingHash</h4>
+                <button type="button" class="close" data-dismiss="modal" #closinghash>&times;</button>
             </div>
 
             <!-- Modal body -->
@@ -240,6 +243,7 @@
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Challenge Settlement</h4>
+                <button type="button" class="close" data-dismiss="modal" #challenge>&times;</button>
             </div>
 
             <!-- Modal body -->
@@ -266,6 +270,7 @@
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Settle Channel </h4>
+                <button type="button" class="close" data-dismiss="modal" #settleC>&times;</button>
             </div>
 
             <!-- Modal body -->
@@ -282,4 +287,5 @@
         </div>
     </div>
 </div>
+
 

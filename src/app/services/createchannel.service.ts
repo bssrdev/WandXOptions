@@ -10,6 +10,7 @@ const BigNumber = require('bignumber.js');
 import {Subscription} from 'rxjs/Subscription';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import has = Reflect.has;
+import {NotificationManagerService} from './notification-manager.service';
 
 
 declare var window: any;
@@ -32,7 +33,7 @@ export class CreateChannelService {
     private _CreateChannel = new BehaviorSubject<Object>(null);
     CreateChannel$ = this._CreateChannel.asObservable();
 
-    constructor(private web3Service: Web3Service) {
+    constructor(private web3Service: Web3Service, private notificationsService: NotificationManagerService) {
 
         // Parameters will be changed as per the execution
         this.channelAddress = '0x47fd281Ad46512E65510674e317424c3cb5f7017';
@@ -100,21 +101,25 @@ export class CreateChannelService {
     };
 
     createChannel = (tokenAddress, receiver, period) => {
-        this.web3Service.getAccounts().then((account) => {
-            this.factory.methods.createChannel(receiver, tokenAddress, period).send({from: account})
-                .on('transactionHash', function (hash) {
-                    console.log(hash);
-                })
-                .on('receipt', function (receipt) {
-                    console.log(receipt.events['ChannelCreated'].returnValues);
-                    this._CreateChannel.next(receipt.events['ChannelCreated'].returnValues);
-                })
-                .on('error', function (error) {
-                    this._CreateChannel.next(error);
-                    console.log(error);
-                });
-        }).catch((error) => {
-            console.log('Error in fetching accounts : ' + error);
+        let _thiss = this;
+        return new Promise((resolve, reject) => {
+            this.web3Service.getAccounts().then((account) => {
+                this.factory.methods.createChannel(receiver, tokenAddress, period).send({from: account})
+                    .on('transactionHash', function (hash) {
+                        console.log(hash);
+                        resolve(hash);
+                    })
+                    .on('receipt', function (receipt) {
+                        console.log(receipt);
+                    })
+                    .on('error', function (error) {
+                        reject(error);
+                        console.log(error);
+                    });
+            }).catch((error) => {
+                console.log('Error in fetching accounts : ' + error);
+                reject(error);
+            });
         });
     };
 
@@ -125,48 +130,52 @@ export class CreateChannelService {
                 this.factory.methods.rechargeChannel(channelAddress, deposit).send({from: account})
                     .on('transactionHash', function (hash) {
                         console.log(hash);
-                        //resolve(hash)
+                        resolve(hash);
                     })
                     .on('receipt', function (receipt) {
                         console.log(receipt.events['ChannelRecharged'].returnValues);
-                        resolve(receipt);
                     })
                     .on('error', function (error) {
                         console.log(error);
-                        reject(error)
+                        reject(error);
                     });
             }).catch((error) => {
                 console.log('Error in fetching accounts : ' + error);
-                reject(error)
+                reject(error);
             });
-        })
+        });
     };
 
     withdrawFromChannel = (channelAddress, sig, amount) => {
-        console.log("sig",sig);
-        console.log("channelAddress",channelAddress);
-        // Signature will be changed as per the execution
-        //this.sig = '0xc3e4ebb25f45031eec6429a59b3ec77664299af65401672dbfe170e9b787d11c18488bc055f8d6aed834d25e23291f794d9abbe13ce10ba5b93f6ae49481ba881c';
-        this.sig = sig;
-        this.web3Service.getAccounts().then((account) => {
-            this.sig = this.sig.substr(2, this.sig.length);
-            let r = '0x' + this.sig.substr(0, 64);
-            let s = '0x' + this.sig.substr(64, 64);
-            let v = this.web3.utils.toDecimal(this.sig.substr(128, 2));
-            let balance = new BigNumber(amount).times(new BigNumber(10).pow(18));
-            debugger
-            this.factory.methods.withdrawFromChannel(channelAddress, balance, v, r, s).send({from: account})
-                .on('transactionHash', function (hash) {
-                    console.log(hash);
-                })
-                .on('receipt', function (receipt) {
-                    console.log(receipt.events['ChannelWithdraw'].returnValues);
-                })
-                .on('error', function (error) {
-                    console.log(error);
-                });
-        }).catch((error) => {
-            console.log('Error in fetching accounts : ' + error);
+        return new Promise((resolve, reject) => {
+            console.log('sig', sig);
+            console.log('channelAddress', channelAddress);
+            // Signature will be changed as per the execution
+            //this.sig = '0xc3e4ebb25f45031eec6429a59b3ec77664299af65401672dbfe170e9b787d11c18488bc055f8d6aed834d25e23291f794d9abbe13ce10ba5b93f6ae49481ba881c';
+            this.sig = sig;
+            this.web3Service.getAccounts().then((account) => {
+                this.sig = this.sig.substr(2, this.sig.length);
+                let r = '0x' + this.sig.substr(0, 64);
+                let s = '0x' + this.sig.substr(64, 64);
+                let v = this.web3.utils.toDecimal(this.sig.substr(128, 2));
+                let balance = new BigNumber(amount).times(new BigNumber(10).pow(18));
+                debugger;
+                this.factory.methods.withdrawFromChannel(channelAddress, balance, v, r, s).send({from: account})
+                    .on('transactionHash', function (hash) {
+                        console.log(hash);
+                        resolve(hash);
+                    })
+                    .on('receipt', function (receipt) {
+                        console.log(receipt.events['ChannelWithdraw'].returnValues);
+                    })
+                    .on('error', function (error) {
+                        console.log(error);
+                        reject(error);
+                    });
+            }).catch((error) => {
+                console.log('Error in fetching accounts : ' + error);
+                reject(error);
+            });
         });
     };
 
@@ -250,25 +259,25 @@ export class CreateChannelService {
     };
 
 
-    challengeSettle = (amount,address) => {
+    challengeSettle = (amount, address) => {
         return new Promise((resolve, reject) => {
             this.web3Service.getAccounts().then((account) => {
                 let balance = new BigNumber(amount).times(new BigNumber(10).pow(18));
                 this.factory.methods.channelChallengedSettlement(address, balance).send({from: account})
                     .on('transactionHash', function (hash) {
                         console.log(hash);
-                        resolve(hash)
+                        resolve(hash);
                     })
                     .on('receipt', function (receipt) {
                         console.log(receipt.events['ChannelChallenged'].returnValues);
                     })
                     .on('error', function (error) {
                         console.log(error);
-                        reject(error)
+                        reject(error);
                     });
             }).catch((error) => {
                 console.log('Error in fetching accounts : ' + error);
-                reject(error)
+                reject(error);
             });
         });
     };
@@ -279,7 +288,7 @@ export class CreateChannelService {
                 this.factory.methods.channelAfterChallengeSettlement(channelAddress).send({from: account})
                     .on('transactionHash', function (hash) {
                         console.log(hash);
-                        resolve(hash)
+                        resolve(hash);
                     })
                     .on('receipt', function (receipt) {
                         console.log(receipt.events['ChannelSettled'].returnValues);
@@ -299,11 +308,10 @@ export class CreateChannelService {
     getTokenlist = (callack) => {
         callack(tokenList);
     };
-    getNumber=(amt)=>{
+    getNumber = (amt) => {
         let deposit = new BigNumber(amt).dividedBy(new BigNumber(10).pow(18));
-        console.log(deposit.toJSON())
-        return deposit
+        return deposit.toJSON();
 
-    }
+    };
 
 }

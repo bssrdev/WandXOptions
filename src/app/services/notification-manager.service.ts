@@ -14,16 +14,16 @@ export class NotificationManagerService{
             return;
         if(MessageType == 'Text'){
             switch(type){
-                case type==='Alert':
+                case 'Alert':
                     this.notificationService.alert(message);
                     break;
-                case type==='Error':
-                    this.notificationService.error(message, "", {theClass : 'test'});
+                case 'Error':
+                    this.notificationService.error(message);
                     break;
-                case type==='Info':
+                case 'Info':
                     this.notificationService.info(message);
                     break;
-                case type==='Success':
+                case 'Success':
                     this.notificationService.info(message);
                     break;
                 default:

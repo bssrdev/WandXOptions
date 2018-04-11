@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {routerTransition} from '../../router.animations';
 import {ApproveTokenService, CreateChannelService,ShareddataService} from '../../services/services';
+import {NotificationManagerService} from '../../services/notification-manager.service';
 
 @Component({
     selector: 'app-form',
@@ -11,7 +12,7 @@ import {ApproveTokenService, CreateChannelService,ShareddataService} from '../..
 export class FormComponent implements OnInit {
     public tokenList: any;
     public senderChannel=[]
-    constructor(private createService: CreateChannelService,private approveTokenService:ApproveTokenService) {
+    constructor(private notificationsService: NotificationManagerService, private createService: CreateChannelService,private approveTokenService:ApproveTokenService) {
     }
     ngOnInit() {
         let _this = this;
@@ -34,11 +35,16 @@ export class FormComponent implements OnInit {
         this.createService.getChannelInfo(address, function (result) {
             result.address=address;
             _this.senderChannel.push(result);
-            //console.log('finalArray', _this.senderChannel);
         });
     }
     approveToken(contractAddress,amount){
+        let _thiss=this;
         console.log(contractAddress,amount );
-        this.approveTokenService.approveToken(contractAddress, amount);
+        this.approveTokenService.approveToken(contractAddress, amount).then((result)=>{
+            _thiss.notificationsService.showNotification('Info', 'Token approve in Progress', 'Text');
+        },function(error) {
+            console.log(error); // Stacktrace
+            _thiss.notificationsService.showNotification('Info', 'Token approve failed', 'Text');
+        });
     }
 }

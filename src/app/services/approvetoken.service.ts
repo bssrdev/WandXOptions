@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Web3Service} from './web3.service';
+import {NotificationManagerService} from './notification-manager.service';
 
 const tokenAbi = require('../../config/testTokenAbi.json');
 const config = require('../../config/tokenlist.json');
@@ -16,7 +17,7 @@ export class ApproveTokenService {
     public token: any;
     public channelAddress: any;
 
-    constructor(private web3Service: Web3Service) {
+    constructor(private web3Service: Web3Service, private notificationsService: NotificationManagerService) {
         this.channelAddress = '0x47fd281Ad46512E65510674e317424c3cb5f7017'; // Change it accordingly
         if (typeof window.web3 !== 'undefined') {
             // Use Mist/MetaMask's provider
@@ -39,21 +40,28 @@ export class ApproveTokenService {
 
 
     approveToken = (channelAddress, amt) => {
-        console.log(typeof amt);
-        let balance = new BigNumber(amt).times(new BigNumber(10).pow(18));
-        this.web3Service.getAccounts().then((account) => {
-            this.token.methods.approve(channelAddress, balance).send({from: account})
-                .on('transactionHash', function (hash) {
-                    console.log(hash);
-                })
-                .on('receipt', function (receipt) {
-                    console.log(receipt.events['Approval'].returnValues);
-                })
-                .on('error', function (error) {
-                    console.log(error);
-                });
-        }).catch((error) => {
-            console.log('Error in fetching accounts : ' + error);
+        let _thiss = this;
+        return new Promise((resolve, reject) => {
+            console.log(typeof amt);
+            let balance = new BigNumber(amt).times(new BigNumber(10).pow(18));
+            this.web3Service.getAccounts().then((account) => {
+                this.token.methods.approve(channelAddress, balance).send({from: account})
+                    .on('transactionHash', function (hash) {
+                        console.log(hash);
+                        resolve(hash)
+                    })
+                    .on('receipt', function (receipt) {
+                        _thiss.notificationsService.showNotification('Info', 'Token approved', 'Text');
+                        console.log(receipt.events['Approval'].returnValues);
+                    })
+                    .on('error', function (error) {
+                        console.log(error);
+                        reject(error)
+                    });
+            }).catch((error) => {
+                console.log('Error in fetching accounts : ' + error);
+                resolve(error)
+            });
         });
     };
     getallowance = (channelAddress) => {

@@ -42,3 +42,13 @@
         transform: scale(1.0);
     }
 }
+.simple-notification-wrapper {
+    position: fixed;
+    width: 100% !important;
+    z-index: 1000;
+}
+
+.simple-notification-wrapper.left { left: 20px; }
+.simple-notification-wrapper.top { top: 20px; }
+.simple-notification-wrapper.right { right: 20px; }
+.simple-notification-wrapper.bottom { bottom: 20px; }
