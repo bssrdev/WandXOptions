@@ -12,13 +12,13 @@ import * as _ from 'underscore';
     styleUrls: ['./charts.component.scss'],
     animations: [routerTransition()]
 })
-export class ChartsComponent implements OnInit {
+export class ChartsComponent implements OnInit, OnDestroy {
     private senderChannel = [];
     private temp = [];
     public createChannel: Subscription;
     public channel: any;
     public trackLength: any;
-
+    public i = 1;
     constructor(private web3Service: Web3Service, private createChannelService: CreateChannelService, private shareddataService: ShareddataService) {
 
     }
@@ -33,6 +33,7 @@ export class ChartsComponent implements OnInit {
     getChannel() {
         let _this = this;
         this.temp = [];
+        this.i = 1;
         this.createChannelService.getChannelsBySender(function (result) {
             _this.trackLength = result.length;
             result.map((key) => {
@@ -46,11 +47,14 @@ export class ChartsComponent implements OnInit {
         let _this = this;
         this.createChannelService.getChannelInfo(address, function (result) {
             result.address = address;
+            result.id =  _this.i++;
             _this.temp.push(result);
-            console.log(_this.trackLength,  _this.temp.length)
-            if (_this.trackLength ===  _this.temp.length) {
+            // console.log(_this.trackLength, _this.temp.length);
+            if (_this.trackLength === _this.temp.length) {
                 _this.shareddataService.setData(_this.senderChannel);
-                _this.senderChannel =   _.sortBy(_this.temp, function(o) { return o['4'] });
+                _this.senderChannel = _.sortBy(_this.temp, function (o) {
+                    return o['4'];
+                });
 
             }
             //console.log('finalArray', _this.senderChannel);
@@ -65,5 +69,12 @@ export class ChartsComponent implements OnInit {
             this.getChannel();
             this.initiateAutoRefresh();
         }, 3000);
+    }
+
+    ngOnDestroy(): void {
+        console.log('destroying sender');
+        if (this.channel) {
+            clearTimeout(this.channel);
+        }
     }
 }

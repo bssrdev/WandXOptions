@@ -5,6 +5,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ShareddataService} from '../../services/shareddata.service';
 import {CreateChannelService} from '../../services/services';
 import {NotificationManagerService} from '../../services/notification-manager.service';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Subscription} from 'rxjs/Subscription';
 
 declare var jQuery: any;
 
@@ -26,6 +28,8 @@ export class BsElementComponent implements OnInit {
     @ViewChild('withdraw') closeBtn6: ElementRef;
     @ViewChild('challenge') closeBtn7: ElementRef;
     @ViewChild('settleC') closeBtn8: ElementRef;
+    @ViewChild('settleCf') closeBtn9: ElementRef;
+    public getData: Subscription;
 
     constructor(private notificationsService: NotificationManagerService, private createService: CreateChannelService, private shareddataService: ShareddataService, private route: ActivatedRoute, private router: Router) {
         console.log(this.route);
@@ -37,29 +41,38 @@ export class BsElementComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getChannelData();
+        this.shareddataService.getData((item) => {
+            if (item) {
+                this.getChannelData(item);
+            }
+        });
+        this.getData = this.shareddataService._SharedData$.subscribe((item) => {
+            if (item) {
+                this.getChannelData(item);
+            }
+        });
     }
 
     getNumber(number) {
         return this.createService.getNumber(number);
     }
 
-    getChannelData() {
+    getChannelData(item) {
         const _thiss = this;
-        this.shareddataService.getData(function (result) {
-            if (result) {
-                _thiss.detailData = result[_thiss.parameter];
-                console.log('details', _thiss.detailData);
-            } else {
-                _thiss.router.navigateByUrl('/charts');
-            }
-
-
-        });
+        if (item) {
+            item.map((key, value) => {
+                if (key.address == _thiss.parameter) {
+                    _thiss.detailData = key;
+                }
+            });
+            //console.log('details', _thiss.detailData);
+        } else {
+            _thiss.router.navigateByUrl('/charts');
+        }
     }
 
     private closeModal(): void {
-        console.log("called close");
+        console.log('called close');
         this.closeBtn1.nativeElement.click();
         this.closeBtn2.nativeElement.click();
         this.closeBtn3.nativeElement.click();
@@ -68,6 +81,7 @@ export class BsElementComponent implements OnInit {
         this.closeBtn6.nativeElement.click();
         this.closeBtn7.nativeElement.click();
         this.closeBtn8.nativeElement.click();
+        this.closeBtn9.nativeElement.click();
     }
 
     submit(token, address) {
@@ -76,7 +90,7 @@ export class BsElementComponent implements OnInit {
         this.createService.rechargeChannel(address, token).then((result) => {
             if (result) {
                 _t.notificationsService.showNotification('Info', 'Recharge channel is in progress', 'Text');
-                _t.getChannelData();
+                //_t.getChannelData();
             }
         });
 
@@ -124,10 +138,10 @@ export class BsElementComponent implements OnInit {
     Withdraw(balanceMessage, balance) {
         this.closeModal();
         let _thiss = this;
-        this.createService.withdrawFromChannel(this.detailData.address, balanceMessage, balance).then((result)=>{
-            if(result){
+        this.createService.withdrawFromChannel(this.detailData.address, balanceMessage, balance).then((result) => {
+            if (result) {
                 _thiss.notificationsService.showNotification('Info', 'Withdraw balance is in progress ' + result, 'Text');
-                console.log('success',result)
+                console.log('success', result);
             }
         });
     }
@@ -152,7 +166,8 @@ export class BsElementComponent implements OnInit {
         });
 
     }
-    testNotify(){
+
+    testNotify() {
         this.notificationsService.showNotification('Info', 'Share this balanceMessage with your receiver ', 'Text');
     }
 }
